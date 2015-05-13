@@ -10,7 +10,47 @@ def validWord(word):
         if word[letter] not in letters:
             return False
     return True
-    
+def distraction():
+    print "What is the secret answer???? asdiutjasldktjah"
+    print "What is the secret answer???? youtube is life"
+    print "What is the secret answer???? this is covering ur answer"
+    print "What is the secret answer???? Hey Arnold!"
+    print "What is the secret answer???? asdfqwerty"
+    print "What is the secret answer???? jigsaw puzzle"
+    print "What is the secret answer???? eminem is cool"
+    print "What is the secret answer???? hello"
+    print "What is the secret answer???? youll never guess this"
+    print "What is the secret answer???? candy boy"
+    print "What is the secret answer???? boxhead"
+    print "What is the secret answer???? ambidexturous"
+    print "What is the secret answer???? distorted"
+    print "What is the secret answer???? the truth"
+    print "What is the secret answer???? asdtiapsdt"
+def distration2():
+    print "What is the secret answer???? darts"
+    print "What is the secret answer???? he dadsf"
+    print "What is the secret answer???? ddos ur mom"
+    print "What is the secret answer???? qwerty"
+    print "What is the secret answer???? darts"
+    print "What is the secret answer???? he dadsf"
+    print "What is the secret answer???? ddos ur mom"
+    print "What is the secret answer???? qwerty"
+    print "What is the secret answer???? darts"
+    print "What is the secret answer???? he dadsf"
+    print "What is the secret answer???? ddos ur mom"
+    print "What is the secret answer???? qwerty"
+    print "What is the secret answer???? youll never guess this"
+    print "What is the secret answer???? candy boy"
+    print "What is the secret answer???? boxhead"
+    print "What is the secret answer???? ambidexturous"
+    print "What is the secret answer???? distorted"
+    print "What is the secret answer???? the truth"
+    print "What is the secret answer???? asdtiapsdt"
+
+
+
+
+
 check1 = True
 hangman = ["      __", "     |  |", "        |","        |","        |", "        |","        |","        |", " _______|_________"]
 head = "     O  |"
@@ -46,7 +86,7 @@ while not winner:
         no_cheating = raw_input("Is " + name2 + " looking away?? (y/n)")
         if no_cheating == "y":
             while check3:
-                print "okay then, sh...."
+                distraction()
                 answer = raw_input("What is the secret answer????")
                 check2 = False
                 if len(answer) <5:
@@ -54,8 +94,7 @@ while not winner:
                 elif validWord(answer):
                     check3 = False
                     check2 = False
-                    skip_lines(50)
-                    
+                    distration2()
                 else:
                     print "Please put the secret word in all lowercase letters."
         elif no_cheating == "n":
@@ -65,6 +104,11 @@ while not winner:
             print "Please put y or n"
     winner = True
 print_hangman(hangman)
+filler = ""
+for x in range(len(answer)):
+    filler+="_ "
+skip_lines(2)
+print filler
 
 
 
