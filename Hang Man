@@ -10,6 +10,7 @@ def validWord(word):
         if word[letter] not in letters:
             return False
     return True
+    
 check1 = True
 hangman = ["      __", "     |  |", "        |","        |","        |", "        |","        |","        |", " _______|_________"]
 head = "     O  |"
@@ -48,9 +49,13 @@ while not winner:
                 print "okay then, sh...."
                 answer = raw_input("What is the secret answer????")
                 check2 = False
-                if validWord(answer):
+                if len(answer) <5:
+                    print "Please make your word at least 5 letters long."
+                elif validWord(answer):
                     check3 = False
                     check2 = False
+                    skip_lines(50)
+                    
                 else:
                     print "Please put the secret word in all lowercase letters."
         elif no_cheating == "n":
