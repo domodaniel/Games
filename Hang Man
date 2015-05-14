@@ -46,9 +46,12 @@ def distration2():
     print "What is the secret answer???? distorted"
     print "What is the secret answer???? the truth"
     print "What is the secret answer???? asdtiapsdt"
-
-
-
+def print_filler(some_array):
+    a = ""
+    for x in some_array:
+        a+=x
+        a+=" "
+    print a
 
 
 check1 = True
@@ -61,8 +64,20 @@ body2 = "     |  |"
 left_leg = "    /   |"
 right_leg = "    / \ |"
 while check1:
-    name1 = raw_input("Who will make a puzzle first?")
-    name2 = raw_input("Who will guess first?")
+    check4 = True
+    while check4:
+        name1 = raw_input("Who will make a puzzle first?")
+        if len(name1) != 0:
+            check4 = False
+        else:
+            print "Type something!"
+    check5 = True
+    while check5:
+        name2 = raw_input("Who will guess first?")
+        if len(name2) != 0:
+            check5 = False
+        else:
+            print "Type something!"
     if name1 == name2:
         skip_lines(1)
         print "hey! Make your names different!"
@@ -104,13 +119,14 @@ while not winner:
             print "Please put y or n"
     winner = True
 print_hangman(hangman)
-filler = ""
+filler = []
 for x in range(len(answer)):
-    filler+="_ "
+    filler.append("_")
 skip_lines(2)
-print filler
-
-
+print_filler(filler)
+skip_lines(1)
+print "Time to guess " + name2 + "!"
 
 
  
+
