@@ -146,7 +146,7 @@ for x in answer:
 print "Time to guess " + name2 + "!"
 wrong_count = 0
 guessed_letters = []
-while wrong_count<7 and "_" not in filler:
+while wrong_count<7 and "_" in filler:
     check6 = True
     while check6:
         print_hangman(hangman)
@@ -162,9 +162,9 @@ while wrong_count<7 and "_" not in filler:
             print "You already guessed that letter."
         else:
             check6 = False
-            guessed_letters.append(guess)
             if guess not in array_answer:
                 print "You guessed wrong!"
+                guessed_letters.append(guess)
                 wrong_count+=1
                 wrong_letter(wrong_count)
                 print_hangman(hangman)
