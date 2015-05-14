@@ -5,9 +5,8 @@ def print_hangman(hangman):
     for x in hangman:
         print x
 def validWord(word):
-    letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"," "]
     for letter in range(len(word)):
-        if word[letter] not in letters:
+        if word[letter] not in symbols:
             return False
     return True
 def distraction():
@@ -68,7 +67,7 @@ def wrong_letter(x):
     elif x == 6:
         hangman[5] = right_leg
 
-
+symbols = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"," ","\'",".","?","!"]
 check1 = True
 hangman = ["      __", "     |  |", "        |","        |","        |", "        |","        |","        |", " _______|_________"]
 head = "     O  |"
@@ -147,7 +146,7 @@ for x in answer:
 print "Time to guess " + name2 + "!"
 wrong_count = 0
 guessed_letters = []
-while wrong_count<7 or "_" not in filler:
+while wrong_count<7 and "_" not in filler:
     check6 = True
     while check6:
         print_hangman(hangman)
@@ -170,7 +169,7 @@ while wrong_count<7 or "_" not in filler:
                 wrong_letter(wrong_count)
                 print_hangman(hangman)
             else:
-                array_answer.indexOf(guess)
+                filler[array_answer.index(guess)] = array_answer[array_answer.index(guess)]
                 
 if wrong_count ==7:
     print name1 + " wins!"
