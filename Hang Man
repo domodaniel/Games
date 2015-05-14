@@ -165,17 +165,17 @@ while wrong_count<7 and "_" in filler:
             if guess not in array_answer:
                 print "You guessed wrong!"
                 guessed_letters.append(guess)
-                wrong_count+=1
                 wrong_letter(wrong_count)
+                wrong_count+=1
                 print_hangman(hangman)
             else:
                 filler[array_answer.index(guess)] = array_answer[array_answer.index(guess)]
                 
-if wrong_count ==7:
+if wrong_count == 7:
     print name1 + " wins!"
 elif " " not in filler:
     print name2 + " wins!"
-    
+print answer    
     
     
     
