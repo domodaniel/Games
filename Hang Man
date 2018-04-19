@@ -198,6 +198,7 @@ elif " " not in filler:
 print "------------------------------------------"
 
 
-
+# need to allow spaces w/o having to guess spaces
+# allow less characters to pass
 
 
