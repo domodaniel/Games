@@ -1,15 +1,18 @@
 def print_board(board): # needs to be fixed
     a = "  "
     spacer = ""
-    if len(board) >= 10:
+    if len(board) >= 9:
       a += " "
     for x in range(len(board[0])):
       a += str(x + 1)
       a += " "
     print a
     
-    
     for b in range(len(board)):
+      if b >= 9 or len(board) < 9:
+        spacer = ""
+      else:
+        spacer = " "
       print str(b + 1) + " "+ spacer + " ".join(board[b])
 
 
@@ -108,8 +111,8 @@ while no_winner:
                 else:
                     print "Please type 1, 2, or 3."
                     print " "
-            if board[int(turn_row)-1][int(turn_column)-1] == "O" or board[int(turn_row)-1][int(turn_column)-1] == "X":
-                print "That spot is already taken!  Don't try to cheat! ONYOKO!!!"
+            if board[int(turn_row)-1][int(turn_column)-1] != "-":
+                print "That spot is already taken!"
             else:
                 bad_response = False
         board[int(turn_row)-1][int(turn_column)-1] = symbol
@@ -121,6 +124,7 @@ while no_winner:
         skip_lines(2)
         print_board(board)
         skip_lines(2)
+        print "---------------"
     if no_winner:
         print "It's a draw!! SCRATCH!!"
         skip_lines(3)
