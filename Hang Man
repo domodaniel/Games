@@ -116,107 +116,120 @@ while check1:
         
 # start the game
 
-#user1 input the puzzle
-winner = False
-while not winner:
-    skip_lines(3)
-    print "HANG MAN"
-    print "NEW GAME!"
-    print "------------------------------------------"
-    skip_lines(1)
-    print "It's " + name1 + "'s turn to make a puzzle!"
-    check2 = True
-    check3 = True
-    while check2 and check3:
-        no_cheating = raw_input("Is " + name2 + " looking away?? (y/n)")
-        if no_cheating == "y":
-            while check3:
-                distraction()
-                answer = raw_input("What is the secret answer????")
-                check2 = False
-                if len(answer) <5:
-                    print "Please make your word at least 5 characters long."
-                elif validWord(answer):
-                    check3 = False
-                    check2 = False
-                    distration2()
-                else:
-                    print "Please put the secret word or phrase in English letters."
-                    print "Your secret answer could include the following puncutation:"
-                    print ", . ? ! "
-        elif no_cheating == "n":
-            print "HEY!!!"
-            print "LOOK AWAY " + name2 + "!!!"
-        else:
-            print "Please put y or n"
-    winner = True
+replay = True
+while replay:
+  #user1 input the puzzle
+  winner = False
+  while not winner:
+      skip_lines(3)
+      print "HANG MAN"
+      print "NEW GAME!"
+      print "------------------------------------------"
+      skip_lines(1)
+      print "It's " + name1 + "'s turn to make a puzzle!"
+      check2 = True
+      check3 = True
+      while check2 and check3:
+          no_cheating = raw_input("Is " + name2 + " looking away?? (y/n)")
+          if no_cheating == "y":
+              while check3:
+                  distraction()
+                  answer = raw_input("What is the secret answer????")
+                  check2 = False
+                  if len(answer) <5:
+                      print "Please make your word at least 5 characters long."
+                  elif validWord(answer):
+                      check3 = False
+                      check2 = False
+                      distration2()
+                  else:
+                      print "Please put the secret word or phrase in English letters."
+                      print "Your secret answer could include the following puncutation:"
+                      print ", . ? ! "
+          elif no_cheating == "n":
+              print "HEY!!!"
+              print "LOOK AWAY " + name2 + "!!!"
+          else:
+              print "Please put y or n"
+      winner = True
+  
+  skip_lines(3)
+  
+  # set up blanks for puzzle as an array so can be edited
+  filler = []
+  for x in range(len(answer)):
+      if answer[x].lower() not in alphabet:
+        filler.append(answer[x])
+      else:
+        filler.append("_")
+  
+  
+  # changes answer to an array so can be edited
+  array_answer = []
+  for x in answer:
+      array_answer.append(x)
+  
+  
+  # start guessing
+  print "Time to guess, " + name2 + "!"
+  wrong_count = 0
+  guessed_letters = []
+  while wrong_count<7 and "_" in filler:
+      check6 = True
+      while check6:
+          print_hangman(hangman)
+          if len(guessed_letters) != 0:
+              print "You guessed: ", print_filler(guessed_letters) # find out why it keeps saying "None" after this 
+          print_filler(filler)
+          guess = raw_input("Guess: ")
+          if len(guess) != 1:
+              print "Please type in one letter from the English alphabet."
+          elif not validWord(guess):
+              print "Please type in one letter from the English alphabet."
+          elif guess.lower() in guessed_letters:
+              print "You already guessed that letter."
+          else:
+              # there was a valid guess
+              check6 = False
+              if wrong_guess(guess, array_answer):
+                  print "You guessed wrong!"
+                  guessed_letters.append(guess)
+                  wrong_count+=1
+                  wrong_letter(wrong_count)
+              else:
+                  a = -1
+                  for x in array_answer:
+                    a += 1
+                    if x == guess.lower():
+                      filler[a] = guess.lower()
+                    elif x == guess.upper():
+                      filler[a] = guess.upper()
+                  # needs to fill in multiple of the same letter
+      skip_lines(2)
+  
+  # reporting who wins
+  print_hangman(hangman)
+  print_filler(filler)
+  skip_lines(1)
+  
+  if wrong_count == 7:
+      print name1 + " wins!"
+  elif " " not in filler:
+      print name2 + " wins!"
+  print "Answer: " + answer
+  print "------------------------------------------"
 
-skip_lines(3)
-
-# set up blanks for puzzle as an array so can be edited
-filler = []
-for x in range(len(answer)):
-    if answer[x].lower() not in alphabet:
-      filler.append(answer[x])
-    else:
-      filler.append("_")
 
 
-# changes answer to an array so can be edited
-array_answer = []
-for x in answer:
-    array_answer.append(x)
-
-
-# start guessing
-print "Time to guess, " + name2 + "!"
-wrong_count = 0
-guessed_letters = []
-while wrong_count<7 and "_" in filler:
-    check6 = True
-    while check6:
-        print_hangman(hangman)
-        if len(guessed_letters) != 0:
-            print "You guessed: ", print_filler(guessed_letters) # find out why it keeps saying "None" after this 
-        print_filler(filler)
-        guess = raw_input("Guess: ")
-        if len(guess) != 1:
-            print "Please type in one letter from the English alphabet."
-        elif not validWord(guess):
-            print "Please type in one letter from the English alphabet."
-        elif guess.lower() in guessed_letters:
-            print "You already guessed that letter."
-        else:
-            # there was a valid guess
-            check6 = False
-            if wrong_guess(guess, array_answer):
-                print "You guessed wrong!"
-                guessed_letters.append(guess)
-                wrong_count+=1
-                wrong_letter(wrong_count)
-            else:
-                a = -1
-                for x in array_answer:
-                  a += 1
-                  if x == guess.lower():
-                    filler[a] = guess.lower()
-                  elif x == guess.upper():
-                    filler[a] = guess.upper()
-                # needs to fill in multiple of the same letter
-    skip_lines(2)
-
-# reporting who wins
-print_hangman(hangman)
-print_filler(filler)
-skip_lines(1)
-
-if wrong_count == 7:
-    print name1 + " wins!"
-elif " " not in filler:
-    print name2 + " wins!"
-print "Answer: " + answer
-print "------------------------------------------"
-
+  otra_vez = raw_input("Would you like to play again? (y/n)")
+  
+  if otra_vez == "y":
+    name_spot = name1
+    name1 = name2
+    name2 = name_spot
+  elif otra_vez == "n":
+    replay = False
+    print "#######################################"
 
 # need to allow spaces w/o having to guess spaces
 # allow less characters to pass
