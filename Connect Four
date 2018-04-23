@@ -7,43 +7,56 @@ def print_board(board):
       a += str(x + 1)
       a += " "
     print a
-    
+    skip_lines(1)
     for b in range(len(board)):
       if b >= 9 or len(board) < 9:
         spacer = ""
       else:
         spacer = " "
-      print str(b + 1) + " "+ spacer + " ".join(board[b])
+      print "| "+ spacer + " ".join(board[b]) + " |"
+    
+    # bottom border
+    c = "|-"
+    for d in range(len(board[0])):
+      c += "--"
+    c += "|"
+    print c
+    
 
 
 def check(board):
-    a = board[0][0]
-    b = board[0][1]
-    c = board[0][2]
-    d = board[1][0]
-    e = board[1][1]
-    f = board[1][2]
-    g = board[2][0]
-    h = board[2][1]
-    i = board[2][2]
-    if a == b and b == c and a != "-":
-        return True
-    elif d == e and e == f and d != "-":
-        return True
-    elif g == h and h == i and g != "-":
-        return True
-    elif a == d and d == g and a != "-":
-        return True
-    elif b == e and e == h and b != "-":
-        return True
-    elif c == f and f == i and c != "-":
-        return True
-    elif a == e and e == i and a != "-":
-        return True
-    elif c == e and e == g and c != "-":
-        return True
-    else:
-        return False
+    for row in board: # check for horizonal connect 4
+      o_counter = 0
+      x_counter = 0
+      for a in row:
+        if a == "O":
+          o_counter += 1
+          x_counter = 0
+        elif a == "X":
+          x_counter += 1
+          o_counter = 0
+        else:
+          o_counter = 0
+          x_counter = 0
+        if o_counter == 4 or x_counter == 4:
+          return True
+    for column in range(len(board[0])): # check for vertical connect 4
+      o_counter = 0
+      x_counter = 0
+      for a in range(len(board)):
+        if board[a][column] == "O":
+          o_counter += 1
+          x_counter = 0
+        elif board[a][column] == "X":
+          x_counter += 1
+          o_counter = 0
+        else:
+          o_counter = 0
+          x_counter = 0
+        if o_counter == 4 or x_counter == 4:
+          return True
+    #needs to include diagonal check
+      
 def skip_lines(a):
     for x in range(a):
         print " "
@@ -62,3 +75,12 @@ for a in range(num_board_rows):
 num_board_spaces = 0
 for x in range(len(board)):
   num_board_spaces += len(board[x])
+  
+print_board(board)
+skip_lines(3)
+
+for x in range(1,5):
+  board[2][x] = "O"
+
+print_board(board)  
+print check(board)
