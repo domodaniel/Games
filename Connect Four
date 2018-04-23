@@ -50,8 +50,8 @@ def skip_lines(a):
         
 
 # create board
-num_board_rows = 3
-num_board_columns = 3
+num_board_rows = 6
+num_board_columns = 7
 board = []
 for a in range(num_board_rows):
   row = []
