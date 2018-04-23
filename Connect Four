@@ -1,3 +1,6 @@
+def skip_lines(a):
+    for x in range(a):
+        print ""
 def print_board(board):
     a = "  "
     spacer = ""
@@ -7,7 +10,7 @@ def print_board(board):
       a += str(x + 1)
       a += " "
     print a
-    skip_lines(1)
+    
     for b in range(len(board)):
       if b >= 9 or len(board) < 9:
         spacer = ""
@@ -21,9 +24,6 @@ def print_board(board):
       c += "--"
     c += "|"
     print c
-    
-
-
 def check(board):
     for row in board: # check for horizonal connect 4
       o_counter = 0
@@ -57,10 +57,7 @@ def check(board):
           return True
     #needs to include diagonal check
       
-def skip_lines(a):
-    for x in range(a):
-        print " "
-        
+
 
 # create board
 num_board_rows = 6
