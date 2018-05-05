@@ -56,7 +56,20 @@ def check(board):
         if o_counter == 4 or x_counter == 4:
           return True
     #needs to include diagonal check
-      
+    
+    
+    #check for diagonal
+    #else: return False
+    
+def valid_column(column_input):
+  if len(column_input) == 0:
+    return False
+  elif column_input not in valid_column_inputs:
+    return False
+  else:
+    return True
+
+
 
 # create board
 num_board_rows = 6
@@ -71,7 +84,13 @@ for a in range(num_board_rows):
 num_board_spaces = 0
 for x in range(len(board)):
   num_board_spaces += len(board[x])
-  
+print num_board_spaces
+
+# create valid column inputs
+valid_column_inputs = []
+for x in range(len(board[0])):
+  valid_column_inputs += str(x + 1)
+print valid_column_inputs
 
 # start game
 print "CONNNECT FOUR"
@@ -103,9 +122,14 @@ while(name_setup_check):
     skip_lines(2)
   else:
     name_setup_check = False
+
+
+
 skip_lines(1)
 print_board(board)
 skip_lines(1)
+
+
 
 
 turn = player_one
@@ -115,22 +139,37 @@ while(not winner):
   print turn + ", it's your turn!"
   valid_turn = False
   while(not valid_turn):
-    play = int(raw_input("Column: "))
-    
-    
-    for x in range(len(board)):
-      if board[len(board)-1  - x][play - 1] == "-":
-        board[len(board)-1 - x][play - 1] = symbol
-        valid_turn = True
-        break
-    print_board(board)
-    
-  if symbol == "X":
-    symbol = "O"
-  elif symbol == "O":
-    symbol = "X"
-  if turn == player_one:
-    turn = player_two
-  elif turn == player_two:
-    turn = player_one
-    
+    column_input = raw_input("Column: ")
+    if not valid_column(column_input):
+      print "Please input a valid column number"
+    else:
+      play = int(column_input)
+      for x in range(len(board)):
+        if str(board[len(board)-1  - x][play - 1]) == "-":
+          play = column_input
+          valid_turn = True
+          break
+  
+  skip_lines(3)
+  board[len(board)-1 - x][int(play) - 1] = symbol
+  print_board(board)
+ 
+  
+  
+  if check(board):
+    winner = True
+  else:
+    if symbol == "X":
+      symbol = "O"
+    elif symbol == "O":
+      symbol = "X"
+    if turn == player_one:
+      turn = player_two
+    elif turn == player_two:
+      turn = player_one
+    skip_lines(3) 
+
+
+print "Congratulations " + turn + "!"
+print "You've made 4 in a row!"
+
