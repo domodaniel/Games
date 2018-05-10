@@ -56,10 +56,33 @@ def check(board):
         if o_counter == 4 or x_counter == 4:
           return True
     #needs to include diagonal check
-    
+    #upwards diagonal uses addition
+    #downwards diagonal uses subtraction
     
     #check for diagonal
-    #else: return False
+    for sum in range(3,len(board[0]) - 3): #for all possible sums of diagonal coordinates (3 to 4 from length of row)
+      x_counter = 0
+      o_counter = 0
+      for row in board:
+        for column in row:
+          if board.index(row) + row.index(column) == sum:
+            if column == "X":
+              x_counter += 1
+              o_counter = 0
+            elif column == "O":
+              x_counter = 0
+              o_counter += 1
+            else:
+              x_counter = 0
+              o_counter = 0
+            
+            if x_counter == 4 or o_counter == 4:
+              return True
+              #still needs revisions
+    
+    
+    return False
+    
     
 def valid_column(column_input):
   if len(column_input) == 0:
