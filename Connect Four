@@ -127,13 +127,11 @@ for a in range(num_board_rows):
 num_board_spaces = 0
 for x in range(len(board)):
   num_board_spaces += len(board[x])
-print num_board_spaces
 
 # create valid column inputs
 valid_column_inputs = []
 for x in range(len(board[0])):
   valid_column_inputs += str(x + 1)
-print valid_column_inputs
 
 # start game
 print "CONNNECT FOUR"
