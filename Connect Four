@@ -60,16 +60,18 @@ def check(board):
     #downwards diagonal uses subtraction
     
     #check for diagonal
-    for sum in range(3,len(board[0]) - 3): #for all possible sums of diagonal coordinates (3 to 4 from length of row)
+    
+    #check for upwards to right
+    for sum in range(3,len(board[0]) + len(board) - 3): #for all possible sums of diagonal coordinates (3 to 4 from length of row)
       x_counter = 0
       o_counter = 0
-      for row in board:
-        for column in row:
-          if board.index(row) + row.index(column) == sum:
-            if column == "X":
+      for row in range(len(board)):
+        for column in range(len(board[0])):
+          if row + column == sum:
+            if board[row][column] == "X":
               x_counter += 1
               o_counter = 0
-            elif column == "O":
+            elif board[row][column] == "O":
               x_counter = 0
               o_counter += 1
             else:
@@ -78,9 +80,27 @@ def check(board):
             
             if x_counter == 4 or o_counter == 4:
               return True
-              #still needs revisions
-    
-    
+              
+    #check for downwards to right
+    for sum in range(-6,7): #for all possible sums of diagonal coordinates (3 to 4 from length of row)
+      x_counter = 0
+      o_counter = 0
+      for row in range(len(board)):
+        for column in range(len(board[0])):
+          if row - column == sum:
+            if board[row][column] == "X":
+              x_counter += 1
+              o_counter = 0
+            elif board[row][column] == "O":
+              x_counter = 0
+              o_counter += 1
+            else:
+              x_counter = 0
+              o_counter = 0
+            
+            if x_counter == 4 or o_counter == 4:
+              return True
+              
     return False
     
     
