@@ -82,7 +82,7 @@ def check(board):
               return True
               
     #check for downwards to right
-    for sum in range(-6,7): #for all possible sums of diagonal coordinates (3 to 4 from length of row)
+    for sum in range(-len(board) + 4 ,len(board[0])- 4): 
       x_counter = 0
       o_counter = 0
       for row in range(len(board)):
@@ -111,8 +111,17 @@ def valid_column(column_input):
     return False
   else:
     return True
+def print_new_game():
+  print "CONNNECT FOUR"
+  print "NEW GAME"
+  print "------------------------------"
+  skip_lines(1)
+def reset_board(board):
+  for row in range(len(board)):
+    for column in range(len(board[0])):
+      board[row][column] = "-"
 
-
+game_score = [0,0]
 
 # create board
 num_board_rows = 6
@@ -134,9 +143,7 @@ for x in range(len(board[0])):
   valid_column_inputs += str(x + 1)
 
 # start game
-print "CONNNECT FOUR"
-print "NEW GAME"
-print "------------------------------"
+print_new_game()
 
 name_setup_check = True
 while(name_setup_check):
@@ -164,53 +171,77 @@ while(name_setup_check):
   else:
     name_setup_check = False
 
-
-
 skip_lines(1)
 print_board(board)
 skip_lines(1)
 
-
-
-
-turn = player_one
-symbol = "X"
-winner = False
-while(not winner):
-  print turn + ", it's your turn!"
-  valid_turn = False
-  while(not valid_turn):
-    column_input = raw_input("Column: ")
-    if not valid_column(column_input):
-      print "Please input a valid column number"
+play_game = True
+while(play_game):
+  turn = player_one
+  symbol = "X"
+  winner = False
+  while(not winner):
+    print turn + ", it's your turn!"
+    valid_turn = False
+    while(not valid_turn):
+      column_input = raw_input("Column: ")
+      if not valid_column(column_input):
+        print "Please input a valid column number"
+      elif board[0][int(column_input) - 1] != "-":
+        print "That column is already full!"
+      else:
+        play = int(column_input)
+        for x in range(len(board)):
+          if str(board[len(board)-1 - x][play - 1]) == "-":
+            play = column_input
+            valid_turn = True
+            break
+    
+    skip_lines(3)
+    board[len(board)-1 - x][int(play) - 1] = symbol
+    print_board(board)
+    
+    if check(board):
+      winner = True
+      if turn == player_one:
+        game_score[0] += 1
+      else:
+        game_score[1] += 1
     else:
-      play = int(column_input)
-      for x in range(len(board)):
-        if str(board[len(board)-1  - x][play - 1]) == "-":
-          play = column_input
-          valid_turn = True
-          break
+      if symbol == "X":
+        symbol = "O"
+      elif symbol == "O":
+        symbol = "X"
+      if turn == player_one:
+        turn = player_two
+      elif turn == player_two:
+        turn = player_one
+      skip_lines(3) 
   
-  skip_lines(3)
-  board[len(board)-1 - x][int(play) - 1] = symbol
-  print_board(board)
- 
+  skip_lines(2)
+  print "---- Game Score ----"
+  print player_one + ": " + str(game_score[0])
+  print player_two + ": " + str(game_score[1])
+  skip_lines(2)
   
+  print "Congratulations " + turn + "!"
+  print "You've made 4 in a row!"
   
-  if check(board):
-    winner = True
-  else:
-    if symbol == "X":
-      symbol = "O"
-    elif symbol == "O":
-      symbol = "X"
-    if turn == player_one:
-      turn = player_two
-    elif turn == player_two:
-      turn = player_one
-    skip_lines(3) 
-
-
-print "Congratulations " + turn + "!"
-print "You've made 4 in a row!"
-
+  valid_input = True
+  valid_play_again_responses = ["Y","N","y","n"]
+  while(valid_input):
+    skip_lines(1)
+    g = raw_input("Would you like to play again? (y/n): ")
+    if g not in valid_play_again_responses:
+      print "Please input y or n."
+    else:
+      valid_input = False
+      
+  if g.lower() == "n":
+    play_game = False
+  elif g.lower() == "y":
+    skip_lines(2)
+    print_new_game()
+    reset_board(board)
+    print_board(board)
+    skip_lines(2)
