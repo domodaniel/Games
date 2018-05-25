@@ -24,6 +24,12 @@ def print_board(board):
       c += "--"
     c += "|"
     print c
+def draw(board):
+  for row in range(len(board)):
+   for column in range(len(board[0])):
+     if board[row][column] == "-":
+       return False
+  return True
 def check(board):
     for row in board: # check for horizonal connect 4
       o_counter = 0
@@ -180,7 +186,7 @@ while(play_game):
   turn = player_one
   symbol = "X"
   winner = False
-  while(not winner):
+  while(not winner and not draw(board)):
     print turn + ", it's your turn!"
     valid_turn = False
     while(not valid_turn):
@@ -207,6 +213,8 @@ while(play_game):
         game_score[0] += 1
       else:
         game_score[1] += 1
+    elif draw(board):
+      winner = True
     else:
       if symbol == "X":
         symbol = "O"
@@ -218,14 +226,20 @@ while(play_game):
         turn = player_one
       skip_lines(3) 
   
+
+  if draw(board):
+      print "It's a draw!"
+  else:
+      print "Congratulations " + turn + "!"
+      print "You've made 4 in a row!"
+
   skip_lines(2)
   print "---- Game Score ----"
   print player_one + ": " + str(game_score[0])
   print player_two + ": " + str(game_score[1])
   skip_lines(2)
   
-  print "Congratulations " + turn + "!"
-  print "You've made 4 in a row!"
+  
   
   valid_input = True
   valid_play_again_responses = ["Y","N","y","n"]
