@@ -1,6 +1,7 @@
 def print_board(board): # needs to be fixed
     a = "  "
-    spacer = ""
+    
+    #print column numbers on top
     if len(board) >= 9:
       a += " "
     for x in range(len(board[0])):
@@ -8,13 +9,14 @@ def print_board(board): # needs to be fixed
       a += " "
     print a
     
+    #print board contents with row num at beginning
+    spacer = ""
     for b in range(len(board)):
       if b >= 9 or len(board) < 9:
         spacer = ""
       else:
         spacer = " "
       print str(b + 1) + " "+ spacer + " ".join(board[b])
-
 
 def check(board):
     a = board[0][0]
@@ -44,15 +46,31 @@ def check(board):
         return True
     else:
         return False
+
 def skip_lines(a):
     for x in range(a):
         print " "
+
+def create_board(num_board_rows, num_board_columns):
+  board = []
+  for a in range(num_board_rows):
+    row = []
+    for b in range(num_board_columns):
+      row.append("-")
+    board.append(row)
+  return board
+
+def reset_board(board):
+  for row in range(len(board)):
+    for column in range(len(board[row])):
+      board[row][column] = "-"
+
 no_winner = True
 check4 = True
 print"X's will go first."
 while check4:
-    name1 = raw_input("Who will be player one?")
-    name2 = raw_input("Who will be player two?")
+    name1 = raw_input("Who will be player one (X)? ")
+    name2 = raw_input("Who will be player two (O)? ")
     if name1 != name2:
         check4 = False
     else:
@@ -60,91 +78,111 @@ while check4:
         print "You need to have different names, so you can know who's turn it is!"
         print "You can't both be " + name1 + "!!"
         skip_lines(2)
-        
 
-# create board
-num_board_rows = 3
-num_board_columns = 3
-board = []
-for a in range(num_board_rows):
-  row = []
-  for b in range(num_board_columns):
-    row.append("-")
-  board.append(row)
 
+
+
+
+board = create_board(3,3)
 
 num_board_spaces = 0
 for x in range(len(board)):
   num_board_spaces += len(board[x])
 
-while no_winner:
-    print "NEW GAME"
-    print "Tic Tac Toe!           On-yo-ko!"
-    print "--------------------------------"
-    print_board(board)
-    turn_counter = 0
-    while turn_counter < 9:
-        turn_counter+=1
-        if(turn_counter + 1) % 2 == 0:
-            symbol = "X"
-            player4turn = name1
-            print "It's " + name1 + "'s turn!"
+
+play = True
+while play:
+  no_winner = True
+  print "NEW GAME"
+  print "Tic Tac Toe!           On-yo-ko!"
+  print "--------------------------------"
+  print_board(board)
+  turn_counter = 0
+  while turn_counter < 9:
+      turn_counter+=1
+      if(turn_counter + 1) % 2 == 0:
+          symbol = "X"
+          player4turn = name1
+          print "It's " + name1 + "'s turn!"
+      else:
+          symbol = "O"
+          player4turn = name2
+          print "It's " + name2 + "'s turn!"
+      bad_response = True
+      good_responses = ["1", "2", "3"]
+      while(bad_response):
+          check1 = True
+          check2 = True
+          while(check2): 
+              turn_row = raw_input(symbol + " row: ")
+              if turn_row in good_responses:
+                  check2 = False
+              else:
+                  print "Please type 1, 2, or 3."
+          while(check1):
+              turn_column = raw_input(symbol + " column: ")
+              if turn_column in good_responses:
+                  check1 = False
+              else:
+                  print "Please type 1, 2, or 3."
+                  print " "
+          if board[int(turn_row)-1][int(turn_column)-1] != "-":
+              print "That spot is already taken!"
+          else:
+              bad_response = False
+      board[int(turn_row)-1][int(turn_column)-1] = symbol
+      if check(board):
+          print player4turn + " is the winner!!! onyoko!!!"
+          no_winner = False
+          print_board(board)
+      skip_lines(2)
+      print_board(board)
+      skip_lines(2)
+      print "---------------"
+      
+  if no_winner:
+    print "It's a draw!! SCRATCH!!"
+    skip_lines(3)
+    check3 = True
+    while check3:
+        play_again = raw_input("Do you want to play again to decide who actually wins??!(y/n)")
+        if play_again != "y" and play_again != "n":
+            print "Please type y or n."
         else:
-            symbol = "O"
-            player4turn = name2
-            print "It's " + name2 + "'s turn!"
-        bad_response = True
-        good_responses = ["1", "2", "3"]
-        while(bad_response):
-            check1 = True
-            check2 = True
-            while(check2): 
-                turn_row = raw_input(symbol + " row:")
-                if turn_row in good_responses:
-                    check2 = False
-                else:
-                    print "Please type 1, 2, or 3."
-            while(check1):
-                turn_column = raw_input(symbol + " column:")
-                if turn_column in good_responses:
-                    check1 = False
-                else:
-                    print "Please type 1, 2, or 3."
-                    print " "
-            if board[int(turn_row)-1][int(turn_column)-1] != "-":
-                print "That spot is already taken!"
-            else:
-                bad_response = False
-        board[int(turn_row)-1][int(turn_column)-1] = symbol
-        if check(board):
-            print player4turn + " is the winner!!! onyoko!!!"
-            no_winner = False
-            print_board(board)
-            break
+            check3 = False
+    if play_again == "y":
+        print "The showdown continues!!!"
+        print "WHO WILL WIN THE ULTIMATE BATTLE?!?!?"
         skip_lines(2)
-        print_board(board)
+        print "This time, " + name2 + " will go first because " + name1 + " went first last time."
         skip_lines(2)
-        print "---------------"
-    if no_winner:
-        print "It's a draw!! SCRATCH!!"
-        skip_lines(3)
-        check3 = True
-        while check3:
-            play_again = raw_input("Do you want to play again to decide who actually wins??!(y/n)")
-            if play_again != "y" and play_again != "n":
-                print "Please type y or n."
-            else:
-                check3 = False
-        if play_again == "y":
-            print "The showdown continues!!!"
-            print "WHO WILL WIN THE ULTIMATE BATTLE?!?!?"
-            skip_lines(2)
-            print "This time, " + name2 + " will go first because " + name1 + " went first last time."
-            skip_lines(2)
-            asdf = name1
-            name1 = name2
-            name2 = asdf
-        elif play_again == "n":
-            print "awww...."
-            print "I guess it really is a true draw."
-            no_winner = False
+        asdf = name1
+        name1 = name2
+        name2 = asdf
+        reset_board(board)
+    elif play_again == "n":
+        print "awww...."
+        print "I guess it really is a true draw."
+        play = False
+  else:
+    skip_lines(3)
+    check3 = True
+    while check3:
+        play_again = raw_input("Do you want to play again?(y/n)")
+        if play_again != "y" and play_again != "n":
+            print "Please type y or n."
+        else:
+            check3 = False
+    if play_again == "y":
+        print "The showdown continues!!!"
+        print "WHO WILL WIN THE ULTIMATE BATTLE?!?!?"
+        skip_lines(2)
+        print "This time, " + name2 + " will go first because " + name1 + " went first last time."
+        skip_lines(2)
+        asdf = name1
+        name1 = name2
+        name2 = asdf
+        reset_board(board)
+    elif play_again == "n":
+        print "END OF GAME"
+        play = False
